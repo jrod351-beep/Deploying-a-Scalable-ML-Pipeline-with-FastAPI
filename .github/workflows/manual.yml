@@ -29,3 +29,6 @@ jobs:
     - name: Test with pytest
       run: |
         pytest test_ml.py -v
+    - name: Run ML pipeline
+      run: |
+        python train_model.py    
