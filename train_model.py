@@ -64,9 +64,7 @@ encoder_path = os.path.join(project_path, "model", "encoder.pkl")
 save_model(encoder, encoder_path)
 
 # load the model
-model = load_model(
-    model_path
-) 
+model = load_model(model_path) 
 
 
 preds = inference(model, X_test)
