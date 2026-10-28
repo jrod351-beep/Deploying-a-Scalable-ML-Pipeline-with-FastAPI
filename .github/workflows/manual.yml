@@ -31,4 +31,9 @@ jobs:
         pytest test_ml.py -v
     - name: Run ML pipeline
       run: |
-        python train_model.py    
+        python train_model.py
+    - name: Upload slice results
+      uses: actions/upload-artifact@v4
+      with:
+        name: slice-results
+        path: slice_output.txt
