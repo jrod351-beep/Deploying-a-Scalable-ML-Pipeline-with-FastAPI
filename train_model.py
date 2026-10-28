@@ -74,7 +74,8 @@ p, r, fb = compute_model_metrics(y_test, preds)
 print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}")
 
 # Clear previous slice results before writing new ones
-with open("slice_output.txt", "w") as f:
+slice_output_path = os.path.join(project_path, "slice_output.txt")
+with open(slice_output_path, "w") as f:
     pass
 
 # iterate through the categorical features
@@ -92,6 +93,6 @@ for col in cat_features:
             lb,
             model,
         )
-        with open("slice_output.txt", "a") as f:
+        with open(slice_output_path, "a") as f:
             print(f"{col}: {slicevalue}, Count: {count:,}", file=f)
             print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}", file=f)
