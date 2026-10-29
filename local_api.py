@@ -1,11 +1,12 @@
 
 import requests
 
-# Send a GET request to the API root.
+# Test the GET endpoint
 r = requests.get("http://127.0.0.1:8000")
 print("GET status code:", r.status_code)
 print("Welcome message:", r.json())
 
+# Test the POST prediction endpoint
 data = {
     "age": 37,
     "workclass": "Private",
@@ -23,7 +24,6 @@ data = {
     "native-country": "United-States",
 }
 
-# Send a POST request with sample data for prediction.
 r = requests.post("http://127.0.0.1:8000/data/", json=data)
 print("POST status code:", r.status_code)
 print("Prediction result:", r.json())

@@ -1,3 +1,4 @@
+
 import os
 
 import pandas as pd
@@ -12,6 +13,8 @@ from ml.model import (
     save_model,
     train_model,
 )
+
+
 project_path = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(project_path, "data", "census.csv")
 print(data_path)
@@ -24,8 +27,6 @@ train, test = train_test_split(
     stratify=data["salary"],
 )
 
-
-# DO NOT MODIFY
 cat_features = [
     "workclass",
     "education",
@@ -36,7 +37,6 @@ cat_features = [
     "sex",
     "native-country",
 ]
-
 
 X_train, y_train, encoder, lb = process_data(
     train,
@@ -54,33 +54,26 @@ X_test, y_test, _, _ = process_data(
     lb=lb,
 )
 
-
 model = train_model(X_train, y_train)
 
-# save the model and the encoder
 model_path = os.path.join(project_path, "model", "model.pkl")
 save_model(model, model_path)
+
 encoder_path = os.path.join(project_path, "model", "encoder.pkl")
 save_model(encoder, encoder_path)
 
-# load the model
 model = load_model(model_path)
-
 
 preds = inference(model, X_test)
 
-# Calculate and print the metrics
 p, r, fb = compute_model_metrics(y_test, preds)
 print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}")
 
-# Clear previous slice results before writing new ones
 slice_output_path = os.path.join(project_path, "slice_output.txt")
 with open(slice_output_path, "w") as f:
     pass
 
-# iterate through the categorical features
 for col in cat_features:
-    # iterate through the unique values in one categorical feature
     for slicevalue in sorted(test[col].unique()):
         count = test[test[col] == slicevalue].shape[0]
         p, r, fb = performance_on_categorical_slice(
@@ -95,4 +88,7 @@ for col in cat_features:
         )
         with open(slice_output_path, "a") as f:
             print(f"{col}: {slicevalue}, Count: {count:,}", file=f)
-            print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}", file=f)
+            print(
+                f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}",
+                file=f,
+            )

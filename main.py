@@ -9,7 +9,6 @@ from ml.data import apply_label, process_data
 from ml.model import inference, load_model
 
 
-# DO NOT MODIFY
 class Data(BaseModel):
     age: int = Field(..., example=37)
     workclass: str = Field(..., example="Private")
@@ -26,14 +25,17 @@ class Data(BaseModel):
     capital_gain: int = Field(..., example=0, alias="capital-gain")
     capital_loss: int = Field(..., example=0, alias="capital-loss")
     hours_per_week: int = Field(..., example=40, alias="hours-per-week")
-    native_country: str = Field(..., example="United-States", alias="native-country")
+    native_country: str = Field(
+        ..., example="United-States", alias="native-country"
+    )
 
 
 project_path = os.path.dirname(os.path.abspath(__file__))
-encoder_path = os.path.join(project_path, "model", "encoder.pkl")
-model_path = os.path.join(project_path, "model", "model.pkl")
 
+encoder_path = os.path.join(project_path, "model", "encoder.pkl")
 encoder = load_model(encoder_path)
+
+model_path = os.path.join(project_path, "model", "model.pkl")
 model = load_model(model_path)
 
 app = FastAPI()
@@ -71,6 +73,4 @@ async def post_inference(data: Data):
     )
 
     prediction = inference(model, data_processed)
-    result = apply_label(prediction)
-
-    return {"result": result}
+    return {"result": apply_label(prediction)}

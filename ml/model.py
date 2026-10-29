@@ -8,7 +8,6 @@ from sklearn.metrics import fbeta_score, precision_score, recall_score
 from ml.data import process_data
 
 
-# Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
     """Train and return a machine learning model."""
     model = RandomForestClassifier(
@@ -20,21 +19,7 @@ def train_model(X_train, y_train):
 
 
 def compute_model_metrics(y, preds):
-    """
-    Validates the trained machine learning model using precision, recall, and F1.
-
-    Inputs
-    ------
-    y : np.array
-        Known labels, binarized.
-    preds : np.array
-        Predicted labels, binarized.
-    Returns
-    -------
-    precision : float
-    recall : float
-    fbeta : float
-    """
+    """Calculate precision, recall, and F1 score."""
     fbeta = fbeta_score(y, preds, beta=1, zero_division=1)
     precision = precision_score(y, preds, zero_division=1)
     recall = recall_score(y, preds, zero_division=1)
