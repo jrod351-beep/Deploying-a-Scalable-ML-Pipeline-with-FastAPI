@@ -1,5 +1,6 @@
 
 import numpy as np
+import pytest
 
 from ml.model import (
     compute_model_metrics,
@@ -38,8 +39,7 @@ def test_compute_model_metrics():
 
     assert precision == 1.0
     assert recall == 0.5
-    assert fbeta > 0.0
-    assert fbeta <= 1.0
+    assert fbeta == pytest.approx(2 / 3)
 
 
 def test_save_and_load_model(tmp_path):
